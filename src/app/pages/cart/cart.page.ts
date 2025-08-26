@@ -1,20 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule]
 })
 export class CartPage implements OnInit {
+  cart: any[] = [];
 
-  constructor() { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
+    const saved = localStorage.getItem('cart');
+    this.cart = saved ? JSON.parse(saved) : [];
   }
 
+  increase(item: any) {
+    item.quantity++;
+  }
+
+  decrease(item: any) {
+    if (item.quantity > 1) item.quantity--;
+  }
+
+  checkout() {
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.router.navigateByUrl('/checkout');
+  }
 }
