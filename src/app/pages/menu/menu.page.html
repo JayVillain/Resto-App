@@ -1,13 +1,16 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>menu</ion-title>
+    <ion-title>Menu</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let m of menus">
+      {{ m.name }} - Rp {{ m.price }}
+      <ion-button slot="end" (click)="addToCart(m)">Tambah</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="goToCart()">Lihat Keranjang</ion-button>
 </ion-content>
